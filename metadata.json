@@ -1,0 +1,6 @@
+{
+  "name": "PROJECT GR Store",
+  "description": "PROJECT GR - YARIS GEN2 FINAL STAGE HKS Type-S 絕對領域一頁式購物車網站",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans TC", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Noto Serif TC", serif;
+  --font-display: "Russo One", sans-serif;
+  --font-digital: "Orbitron", sans-serif;
+  --font-number: "Teko", sans-serif;
+  
+  --color-eva-orange: #ff9d00;
+  --color-eva-red: #ec0000;
+  --color-eva-black: #000000;
+  --color-eva-dark-gray: #111111;
+}
+
+/* 霓虹發光感與特殊造型效果 */
+.text-eva-orange {
+  color: #ff9d00;
+  text-shadow: 0 0 8px rgba(255, 157, 0, 0.6);
+}
+.text-eva-red {
+  color: #ec0000;
+  text-shadow: 0 0 10px rgba(236, 0, 0, 0.8);
+}
+.text-glow {
+  text-shadow: 0 0 25px rgba(236, 0, 0, 0.9);
+}
+
+.hex-grid-bg {
+  background-color: #050505;
+  background-image: 
+    linear-gradient(30deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+    linear-gradient(150deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+    linear-gradient(30deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+    linear-gradient(150deg, #111 12%, transparent 12.5%, transparent 87%, #111 87.5%, #111),
+    linear-gradient(60deg, #1a1a1a 25%, transparent 25.5%, transparent 75%, #1a1a1a 75%, #1a1a1a),
+    linear-gradient(60deg, #1a1a1a 25%, transparent 25.5%, transparent 75%, #1a1a1a 75%, #1a1a1a);
+  background-size: 30px 52px;
+  background-position: 0 0, 0 0, 15px 26px, 15px 26px, 0 0, 15px 26px;
+}
+
+/* 經典橘黑/紅黑斑馬線警告條 */
+.eva-stripe {
+  background: repeating-linear-gradient(
+    45deg,
+    #000000,
+    #000000 10px,
+    #ec0000 10px,
+    #ec0000 20px
+  );
+}
+
+.eva-stripe-orange {
+  background: repeating-linear-gradient(
+    45deg,
+    #000000,
+    #000000 10px,
+    #ff9d00 10px,
+    #ff9d00 20px
+  );
+}
+
+/* MAGI 系統機殼邊框 */
+.magi-box {
+  border: 2px solid #ff9d00;
+  background: rgba(0, 0, 0, 0.95);
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 157, 0, 0.15);
+}
+.magi-box::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 24px;
+  height: 24px;
+  border-top: 4px solid #ff9d00;
+  border-left: 4px solid #ff9d00;
+}
+.magi-box::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 24px;
+  height: 24px;
+  border-bottom: 4px solid #ff9d00;
+  border-right: 4px solid #ff9d00;
+}
+
+/* 電子掃描線效果 */
+.scanlines {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0,0,0,0.3) 50%,
+    rgba(0,0,0,0.3)
+  );
+  background-size: 100% 4px;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 緊急事態呼吸閃爍動畫 */
+@keyframes emergency-blink {
+  0% { background-color: #ec0000; color: #000000; }
+  50% { background-color: #000000; color: #ec0000; }
+  100% { background-color: #ec0000; color: #000000; }
+}
+.animate-eva-blink {
+  animation: emergency-blink 0.8s steps(1) infinite;
+}
+
+.skew-box {
+  transform: skewX(-12deg);
+}
+.unskew-text {
+  transform: skewX(12deg);
+}
+
+/* EVA 宣言引用盒 */
+.eva-quote-box {
+  position: relative;
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding: 0.5rem 2.5rem;
+  background: black;
+  border-left: 8px solid #ff9d00; 
+}
+
+.eva-quote-text {
+  font-family: 'Noto Serif TC', serif;
+  font-weight: 900;
+  font-size: clamp(2.2rem, 5.5vw, 4.5rem); 
+  color: white;
+  line-height: 1.1;
+  transform: scaleY(1.4); 
+  letter-spacing: -0.08em; 
+  text-shadow: 4px 4px 0px #ec0000; 
+  position: relative;
+  z-index: 10;
+}
+
+.eva-quote-bg-text {
+  position: absolute;
+  top: -24px;
+  left: 12px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  color: #ff9d00;
+  opacity: 0.7;
+  letter-spacing: 0.25em;
+}
+
+/* 信用卡分期無線電選鈕亮起樣式 */
+.plan-radio:checked + .plan-card {
+  border-color: #ec0000;
+  background: linear-gradient(90deg, rgba(236, 0, 0, 0.25), transparent);
+  box-shadow: inset 0 0 10px rgba(236, 0, 0, 0.15);
+}
