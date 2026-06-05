@@ -20,7 +20,7 @@ import {
   CreditCard,
   Sparkles
 } from "lucide-react";
-import { PRODUCT_DATA, INSTALLMENT_PLANS, TESTIMONIALS, IMAGES } from "./data";
+import { PRODUCT_DATA, INSTALLMENT_PLANS, TESTIMONIALS, IMAGES, SYSTEM_CONFIG } from "./data";
 import CoolingChart from "./components/CoolingChart";
 
 export default function App() {
@@ -71,18 +71,17 @@ export default function App() {
 
     // Random order notification simulation (boost urgency safely)
     const notificationTimeout = setTimeout(() => {
-      const cities = ["台北松山", "新北板橋", "台中西屯", "桃園中壢", "新竹竹北", "高雄前鎮"];
-      const buyers = ["張先生", "林先生", "陳先生", "王先生", "劉先生", "許先生"];
+      const { cities, buyers, suffix, clearTimerMs } = SYSTEM_CONFIG.realtimeAlerts;
       const randomCity = cities[Math.floor(Math.random() * cities.length)];
       const randomBuyer = buyers[Math.floor(Math.random() * buyers.length)];
-      setOrderNotification(`${randomCity}的 ${randomBuyer} 剛剛搶購了 1 套 HKS Type-S 冷卻組！`);
+      setOrderNotification(`${randomCity}的 ${randomBuyer}${suffix}`);
       
       const clearNotice = setTimeout(() => {
         setOrderNotification(null);
-      }, 5000);
+      }, clearTimerMs);
 
       return () => clearTimeout(clearNotice);
-    }, 6000);
+    }, SYSTEM_CONFIG.realtimeAlerts.notificationTimerMs);
 
     return () => {
       clearInterval(tempInterval);
@@ -148,21 +147,21 @@ export default function App() {
           <div className="flex items-center gap-2">
             <div className="w-3 h-8 bg-red-600 skew-box"></div>
             <span className="text-base md:text-xl font-black italic tracking-tighter text-white">
-              PROJECT GR <span className="text-red-600">| YARIS GEN2</span> FINAL STAGE
+              {SYSTEM_CONFIG.nav.brandLogo} <span className="text-red-600">{SYSTEM_CONFIG.nav.brandSub}</span>
             </span>
           </div>
           
           <div className="flex items-center gap-4">
             <span className="hidden lg:inline-flex items-center gap-2 text-xs text-gray-400 font-mono">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              SYSTEM OVERWATCH ACTIVE
+              {SYSTEM_CONFIG.nav.statusText}
             </span>
             <a 
               href="#order" 
               className="skew-box bg-white text-black hover:bg-red-600 hover:text-white px-4 py-1.5 font-bold transition-all duration-300 flex items-center shadow-lg hover:shadow-red-600/40"
             >
               <span className="unskew-text uppercase text-xs md:text-sm tracking-widest flex items-center gap-1">
-                <Flag className="w-4 h-4" /> BATTLE START
+                <Flag className="w-4 h-4" /> {SYSTEM_CONFIG.nav.ctaText}
               </span>
             </a>
           </div>
@@ -187,22 +186,20 @@ export default function App() {
           <div className="md:col-span-8 text-left space-y-6 md:space-y-8">
             <div className="inline-flex items-center gap-2 border border-red-600 px-4 py-1 bg-red-950/40 skew-box animate-pulse">
               <span className="text-red-400 text-xs md:text-sm font-bold tracking-widest uppercase unskew-text">
-                公道最速傳說 // 始動
+                {SYSTEM_CONFIG.hero.badge}
               </span>
             </div>
             
             <h1 className="text-5xl md:text-8xl font-black leading-none italic drop-shadow-2xl font-display">
-              封印，<br />
+              {SYSTEM_CONFIG.hero.titleMain}<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400 text-glow">
-                解除。
+                {SYSTEM_CONFIG.hero.titleGlow}
               </span>
             </h1>
 
-            <p className="text-base md:text-lg text-gray-300 border-l-4 border-red-600 pl-4 max-w-xl leading-relaxed italic">
-              「昨晚我輸給一輛 GR Yaris Gen2... <br />
-              跑了整趟北宜公路催沒停，他的油溫居然沒有過熱？」<br />
-              <span className="text-white font-bold mt-3 block not-italic text-lg md:text-xl">現在，輪到別人看不到你的車尾燈了。</span>
-            </p>
+            <div className="text-base md:text-lg text-gray-300 border-l-4 border-red-600 pl-4 max-w-xl leading-relaxed italic">
+              {SYSTEM_CONFIG.hero.quote}
+            </div>
 
             <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 max-w-md">
               <button 
@@ -210,16 +207,16 @@ export default function App() {
                 className="group relative px-8 py-4 bg-red-600 hover:bg-red-700 transition-all duration-300 skew-box shadow-[0_0_30px_rgba(220,38,38,0.4)] cursor-pointer"
               >
                 <span className="unskew-text text-xl md:text-2xl font-black uppercase flex items-center justify-center gap-2 whitespace-nowrap">
-                  NT$ {PRODUCT_DATA.price.toLocaleString()} 參戰 <ArrowRight className="w-5 h-5 animate-pulse" />
+                  NT$ {PRODUCT_DATA.price.toLocaleString()} {SYSTEM_CONFIG.hero.ctaPriceLabel} <ArrowRight className="w-5 h-5 animate-pulse" />
                 </span>
               </button>
               
               <div className="flex flex-col text-left justify-center pl-2">
                 <span className="text-xs text-gray-400 line-through tracking-wider font-mono">
-                  ORIGINAL: NT$ {PRODUCT_DATA.originalPrice.toLocaleString()}
+                  {SYSTEM_CONFIG.hero.originalPriceLabel}: NT$ {PRODUCT_DATA.originalPrice.toLocaleString()}
                 </span>
                 <span className="text-xs text-red-500 font-bold uppercase tracking-widest animate-pulse flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5" /> 限時降價特惠中
+                  <Sparkles className="w-3.5 h-3.5" /> {SYSTEM_CONFIG.hero.badgeLabel}
                 </span>
               </div>
             </div>
@@ -230,10 +227,10 @@ export default function App() {
             <div className="border-2 border-red-500 bg-black/90 p-5 skew-box shadow-[0_0_20px_rgba(239,68,68,0.2)]">
               <div className="unskew-text text-left md:text-right">
                 <p className="text-xs text-red-500 font-bold mb-1 tracking-wider uppercase font-mono">
-                  SYSTEM READY // INSTOCK:
+                  {SYSTEM_CONFIG.hero.stockLabel}
                 </p>
                 <div className="text-2xl md:text-3xl font-black font-number text-white animate-pulse tracking-wider">
-                  GEN2 FINAL {PRODUCT_DATA.stockLeft} UNITS
+                  {SYSTEM_CONFIG.hero.stockUnitLabel} {PRODUCT_DATA.stockLeft} {SYSTEM_CONFIG.hero.stockUnitSuffix}
                 </div>
               </div>
             </div>
@@ -244,7 +241,7 @@ export default function App() {
       {/* MAGI Technical Alarm Emergency Warnings Section */}
       <section className="py-20 bg-black relative border-t-4 border-eva-orange hex-grid-bg overflow-hidden">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[18vw] leading-none text-eva-orange opacity-[0.03] pointer-events-none font-serif font-black whitespace-nowrap select-none">
-          活動限界
+          {SYSTEM_CONFIG.magiSection.watermark}
         </div>
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-20">
@@ -252,17 +249,17 @@ export default function App() {
             <div className="inline-flex flex-col items-center">
               <div className="border-2 border-eva-red bg-black px-8 py-4 mb-2 animate-eva-blink shadow-[0_0_20px_rgba(236,0,0,0.5)]">
                 <h2 className="text-4xl md:text-6xl font-serif font-black text-black tracking-widest uppercase scale-y-[1.35] skew-x-[-5deg]">
-                  緊急事態
+                  {SYSTEM_CONFIG.magiSection.emergencyBadge}
                 </h2>
               </div>
               <p className="text-eva-red font-digital tracking-[0.4em] text-xs md:text-sm mt-4 uppercase">
-                EMERGENCY: THERMAL RUNAWAY LIMIT ACTIVED
+                {SYSTEM_CONFIG.magiSection.emergencyDetails}
               </p>
             </div>
             
             <div className="eva-quote-box mt-10">
-              <span className="eva-quote-bg-text">EPISODE: OVERHEAT FEAR</span>
-              <p className="eva-quote-text">你的引擎在哭泣啊！</p>
+              <span className="eva-quote-bg-text">{SYSTEM_CONFIG.magiSection.episodeTitle}</span>
+              <p className="eva-quote-text">{SYSTEM_CONFIG.magiSection.quoteHeader}</p>
             </div>
           </div>
 
@@ -273,13 +270,13 @@ export default function App() {
                 <div className="flex justify-between items-start border-b-2 border-eva-orange pb-4 mb-6">
                   <div>
                     <span className="bg-eva-orange text-black font-bold px-3 py-0.5 text-xs block w-fit mb-1 font-mono">
-                      MAGI-01 // BALTHASAR
+                      {SYSTEM_CONFIG.magiSection.panel1.tag}
                     </span>
-                    <h3 className="text-2xl font-serif font-black text-white scale-y-[1.25]">熱暴走警告</h3>
+                    <h3 className="text-2xl font-serif font-black text-white scale-y-[1.25]">{SYSTEM_CONFIG.magiSection.panel1.title}</h3>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-eva-orange font-mono">TARGET: LIHPAO</p>
-                    <p className="text-xs text-eva-red font-mono font-bold animate-pulse">STATUS: CRITICAL</p>
+                    <p className="text-xs text-eva-orange font-mono">{SYSTEM_CONFIG.magiSection.panel1.target}</p>
+                    <p className="text-xs text-eva-red font-mono font-bold animate-pulse">{SYSTEM_CONFIG.magiSection.panel1.status}</p>
                   </div>
                 </div>
 
@@ -287,7 +284,7 @@ export default function App() {
                   <AlertTriangle className="w-14 h-14 text-eva-red mb-3 animate-pulse" />
                   <div className="text-center w-full border-y-2 border-neutral-900 py-4 bg-neutral-950/80">
                     <p className="text-[10px] text-eva-orange tracking-[0.3em] mb-1 uppercase font-mono">
-                      TIME TO LIMP MODE (賽道安全極限)
+                      {SYSTEM_CONFIG.magiSection.panel1.statHeader}
                     </p>
                     <div className="text-4xl md:text-5xl font-black tracking-widest text-eva-red text-center font-digital">
                       {circuitTime}
@@ -296,9 +293,8 @@ export default function App() {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-dashed border-eva-orange/40">
-                  <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                    <strong className="text-white">GR YARIS 本身散熱效率不足</strong>，若在賽道全油門，短短兩圈原廠冷卻系統依然會觸發電腦熱防護 Limp Mode（鎖動力保護）。
-                  </p>
+                  <div className="text-gray-300 text-sm md:text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: SYSTEM_CONFIG.magiSection.panel1.description }}>
+                  </div>
                 </div>
               </div>
             </div>
@@ -309,13 +305,13 @@ export default function App() {
                 <div className="flex justify-between items-start border-b-2 border-eva-orange pb-4 mb-6">
                   <div>
                     <span className="bg-eva-orange text-black font-bold px-3 py-0.5 text-xs block w-fit mb-1 font-mono">
-                      MAGI-02 // MELCHIOR
+                      {SYSTEM_CONFIG.magiSection.panel2.tag}
                     </span>
-                    <h3 className="text-2xl font-serif font-black text-white scale-y-[1.25]">活動限界 OIL</h3>
+                    <h3 className="text-2xl font-serif font-black text-white scale-y-[1.25]">{SYSTEM_CONFIG.magiSection.panel2.title}</h3>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-eva-orange font-mono">TARGET: BEIYI</p>
-                    <p className="text-xs text-eva-orange font-mono font-bold">STATUS: WARNING</p>
+                    <p className="text-xs text-eva-orange font-mono">{SYSTEM_CONFIG.magiSection.panel2.target}</p>
+                    <p className="text-xs text-eva-orange font-mono font-bold">{SYSTEM_CONFIG.magiSection.panel2.status}</p>
                   </div>
                 </div>
 
@@ -323,7 +319,7 @@ export default function App() {
                   <Flame className="w-14 h-14 text-eva-orange mb-3 animate-pulse" />
                   <div className="text-center w-full border-y-2 border-neutral-900 py-4 bg-neutral-950/80">
                     <p className="text-[10px] text-eva-orange tracking-[0.3em] mb-1 uppercase font-mono">
-                      REAL-TIME OIL TEMP (即時機油溫度)
+                      {SYSTEM_CONFIG.magiSection.panel2.statHeader}
                     </p>
                     <div className="text-4xl md:text-5xl font-black tracking-widest text-eva-orange text-center font-digital">
                       {beiyiTemp.toFixed(1)}°C
@@ -332,9 +328,8 @@ export default function App() {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-dashed border-eva-orange/40">
-                  <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                    在高負載山道狂飆，北47線都還沒攻略完畢，<strong class="text-white">機油溫度已飆破臨界點</strong>，引擎效能開始因高溫急速軟腳退火！
-                  </p>
+                  <div className="text-gray-300 text-sm md:text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: SYSTEM_CONFIG.magiSection.panel2.description }}>
+                  </div>
                 </div>
               </div>
             </div>
@@ -349,10 +344,10 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
           <div className="text-center mb-16">
             <h4 className="text-red-600 tracking-[0.6em] text-xs font-bold uppercase mb-2 font-mono">
-              New Cooling Engineering for Gen2
+              {SYSTEM_CONFIG.showcase.badge}
             </h4>
             <h2 className="text-4xl md:text-6xl font-black italic text-white font-display">
-              HKS Type-S <span className="text-red-600 text-glow">絕對領域</span>
+              {SYSTEM_CONFIG.showcase.titleMain} <span className="text-red-600 text-glow">{SYSTEM_CONFIG.showcase.titleGlow}</span>
             </h2>
           </div>
           
@@ -396,10 +391,10 @@ export default function App() {
                   src={IMAGES.product} 
                   onError={(e) => handleImageError(e, "product")}
                   className="w-full h-auto filter contrast-125 hover:scale-[1.01] transition-transform duration-500 block" 
-                  alt="HKS Gen2 Cooler Kit Detail"
+                  alt="Product Highlight"
                 />
                 <div className="absolute top-2 right-2 bg-black/80 text-white font-mono text-[10px] py-1 px-2 border border-red-600/50">
-                  HKS OIL SYSTEM / CO.JP
+                  {SYSTEM_CONFIG.nav.brandLogo} // TUNING SYSTEM
                 </div>
               </div>
               <div className="absolute -top-4 -right-4 w-full h-full border-2 border-neutral-800 z-0"></div>
@@ -427,7 +422,7 @@ export default function App() {
                   src={IMAGES.installMechanic} 
                   onError={(e) => handleImageError(e, "install")}
                   className="w-full h-auto grayscale contrast-125 border-4 border-white shadow-2xl block" 
-                  alt="Master Technician Ah-Mi Professional Work"
+                  alt="Master Technician Professional Work"
                 />
                 <div className="absolute bottom-4 left-4 bg-red-600 text-white px-5 py-1.5 font-black italic text-lg md:text-xl shadow-lg">
                   GOD HAND: {TESTIMONIALS.mechanic.name}
@@ -438,10 +433,10 @@ export default function App() {
             {/* Quote details */}
             <div className="w-full lg:w-2/3 space-y-6">
               <h4 className="text-red-500 font-bold tracking-widest text-sm uppercase font-mono">
-                {TESTIMONIALS.mechanic.title}
+                {SYSTEM_CONFIG.technician.title}
               </h4>
               <h2 className="text-3xl md:text-5xl font-black italic text-white leading-tight">
-                「車子是男人的靈魂，我不會讓它受傷。」
+                {SYSTEM_CONFIG.technician.boldQuote}
               </h2>
               <div className="border-l-4 border-red-600 pl-6 py-2">
                 <p className="text-lg md:text-xl text-gray-300 italic leading-relaxed">
@@ -452,15 +447,15 @@ export default function App() {
               {/* Install Pricing Discount calculation display block */}
               <div className="grid grid-cols-2 gap-4 max-w-md pt-4">
                 <div className="bg-black p-4 text-center border border-neutral-800">
-                  <p className="text-gray-500 text-xs mb-1 uppercase tracking-wider font-mono">常規安裝工資</p>
+                  <p className="text-gray-500 text-xs mb-1 uppercase tracking-wider font-mono">{SYSTEM_CONFIG.technician.regularWageLabel}</p>
                   <p className="text-xl md:text-2xl font-bold text-gray-500 line-through font-number">
                     NT$ {TESTIMONIALS.mechanic.regularPrice.toLocaleString()}
                   </p>
                 </div>
                 <div className="bg-red-950/30 p-4 text-center border border-red-600 shadow-[0_0_15px_rgba(220,38,38,0.2)]">
-                  <p className="text-red-500 text-xs mb-1 font-bold uppercase tracking-wider font-mono">本波參戰優惠</p>
+                  <p className="text-red-500 text-xs mb-1 font-bold uppercase tracking-wider font-mono">{SYSTEM_CONFIG.technician.couponLabel}</p>
                   <p className="text-2xl md:text-3xl font-black text-white italic font-number animate-pulse">
-                    $0 FREE
+                    {SYSTEM_CONFIG.technician.freeText}
                   </p>
                 </div>
               </div>
@@ -484,7 +479,7 @@ export default function App() {
                     NT$ {PRODUCT_DATA.originalPrice.toLocaleString()}
                   </span>
                   <span className="text-xs bg-red-950 text-red-400 border border-red-900 px-2.5 py-1 font-black uppercase tracking-wider skew-box">
-                    <span className="unskew-text">限時特惠 DISCOUNT</span>
+                    <span className="unskew-text">{SYSTEM_CONFIG.checkout.badgeLabel}</span>
                   </span>
                 </div>
                 
@@ -497,35 +492,35 @@ export default function App() {
               </div>
               
               <div className="bg-red-600 text-white px-5 py-2 py-2.5 font-black italic animate-bounce shadow-md text-sm md:text-base">
-                最後 {PRODUCT_DATA.stockLeft} 組庫存 // 補貨未定
+                {SYSTEM_CONFIG.checkout.stockUrgencyPrefix} {PRODUCT_DATA.stockLeft} {SYSTEM_CONFIG.checkout.stockUrgencySuffix}
               </div>
             </div>
 
             {/* Included Items Details */}
             <div className="space-y-4 mb-8">
-              <p className="text-xs text-neutral-500 font-mono uppercase tracking-wide">Included In Package / 全配內容物 :</p>
+              <p className="text-xs text-neutral-500 font-mono uppercase tracking-wide">{SYSTEM_CONFIG.checkout.packageItemsHeader}</p>
               <ul className="space-y-3">
                 {PRODUCT_DATA.specs.map((spec, i) => (
                   <li key={i} className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900/50 pb-2">
                     <span className="font-bold text-gray-300 flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-red-600 flex-shrink-0" /> {spec}
                     </span>
-                    <span className="text-green-500 font-black italic font-mono text-xs">READY</span>
+                    <span className="text-green-500 font-black italic font-mono text-xs">{SYSTEM_CONFIG.checkout.readyLabel}</span>
                   </li>
                 ))}
                 
                 <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900/50 pb-2">
                   <span className="font-bold text-gray-300 flex items-center gap-2">
-                    <Truck className="w-4 h-4 text-red-600 flex-shrink-0" /> 日本航空空運直達 (Japan Air Cargo Link)
+                    <Truck className="w-4 h-4 text-red-600 flex-shrink-0" /> {SYSTEM_CONFIG.checkout.airCargoText}
                   </span>
-                  <span className="text-green-500 font-black italic font-mono text-xs">INCLUDED</span>
+                  <span className="text-green-500 font-black italic font-mono text-xs">{SYSTEM_CONFIG.checkout.includedLabel}</span>
                 </li>
 
                 <li className="flex items-center justify-between text-sm md:text-base bg-red-950/20 p-3 -mx-3 rounded">
                   <span className="font-bold text-white flex items-center gap-2">
-                    <Gift className="w-4 h-4 text-yellow-500 flex-shrink-0" /> 阿咪專業手工無損安裝服務
+                    <Gift className="w-4 h-4 text-yellow-500 flex-shrink-0" /> {SYSTEM_CONFIG.checkout.freeInstallBanner}
                   </span>
-                  <span className="text-yellow-400 font-black italic font-mono text-xs">FREE UPGRADE</span>
+                  <span className="text-yellow-400 font-black italic font-mono text-xs">{SYSTEM_CONFIG.checkout.freeUpgradeLabel}</span>
                 </li>
               </ul>
             </div>
@@ -535,7 +530,7 @@ export default function App() {
               <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div className="text-left">
                   <p className="text-sm font-bold text-white flex items-center gap-1.5">
-                    <ShoppingCart className="w-4 h-4 text-red-500" /> 選擇購入數量 (QUANTITY)
+                    <ShoppingCart className="w-4 h-4 text-red-500" /> {SYSTEM_CONFIG.checkout.quantitySelectHeader}
                   </p>
                 </div>
                 
@@ -567,7 +562,7 @@ export default function App() {
               className="w-full bg-red-600 hover:bg-red-500 font-black text-2xl md:text-3xl py-5 uppercase italic tracking-wider skew-box shadow-[0_0_25px_rgba(220,38,38,0.6)] hover:shadow-[0_0_35px_rgba(220,38,38,0.8)] transition-all duration-300 cursor-pointer text-center block"
             >
               <span className="unskew-text flex items-center justify-center gap-2">
-                立即結帳 / CHECKOUT <Flag className="w-6 h-6 text-white animate-pulse" />
+                {SYSTEM_CONFIG.checkout.checkoutButtonText} <Flag className="w-6 h-6 text-white animate-pulse" />
               </span>
             </button>
           </div>
@@ -577,13 +572,13 @@ export default function App() {
       {/* Direct Professional Footer */}
       <footer className="bg-neutral-950 border-t border-red-950/40 py-12 text-center">
         <h2 className="text-2xl font-black italic text-white mb-2 tracking-widest font-display">
-          GR PROJECT
+          {SYSTEM_CONFIG.footer.brandName}
         </h2>
         <p className="text-neutral-500 tracking-widest text-xs uppercase font-mono">
-          RACE ON TRACK. DRIVE SAFE. // YARIS GEN2 EDITION
+          {SYSTEM_CONFIG.footer.brandSlogan}
         </p>
         <p className="text-[10px] text-neutral-600 mt-4 font-mono">
-          © 2026 PROJECT GR All Rights Reserved. Custom Tuning solutions & PayUni Gateway.
+          {SYSTEM_CONFIG.footer.copyright}
         </p>
       </footer>
 
@@ -597,7 +592,7 @@ export default function App() {
             {/* Header / HUD panel decorator */}
             <div className="bg-black p-4 border-b border-neutral-800 flex justify-between items-center">
               <h3 className="text-lg md:text-xl font-black italic uppercase tracking-wider text-white flex items-center gap-2">
-                <Wrench className="w-5 h-5 text-red-600" /> Tuning Configuration
+                <Wrench className="w-5 h-5 text-red-600" /> {SYSTEM_CONFIG.checkout.modalTitle}
               </h3>
               <button 
                 onClick={() => setIsModalOpen(false)}
@@ -611,9 +606,9 @@ export default function App() {
               {/* Product item breakdown info */}
               <div className="bg-black border border-neutral-800 p-4 mb-6 rounded flex justify-between items-center">
                 <div>
-                  <h4 className="font-bold text-white text-base">HKS Oil Cooler Kit</h4>
+                  <h4 className="font-bold text-white text-base">{PRODUCT_DATA.name}</h4>
                   <p className="text-gray-500 text-xs font-mono">
-                    Yaris Gen2 Type-S / Qty: {quantity} / Ah-Mi Install Upgrade
+                    {PRODUCT_DATA.subName} / Qty: {quantity}
                   </p>
                 </div>
                 <div className="text-right">
@@ -625,7 +620,7 @@ export default function App() {
 
               {/* Installment choices list */}
               <p className="text-xs text-gray-400 uppercase font-bold mb-3 tracking-widest font-mono flex items-center gap-1.5">
-                <CreditCard className="w-3.5 h-3.5 text-eva-orange" /> Select Payment Option (付款方案選擇)
+                <CreditCard className="w-3.5 h-3.5 text-eva-orange" /> {SYSTEM_CONFIG.checkout.planSelectHeader}
               </p>
 
               <div className="grid grid-cols-1 gap-3 mb-6 max-h-[300px] overflow-y-auto pr-1">
@@ -646,11 +641,11 @@ export default function App() {
                         </span>
                         {plan.rate > 0 ? (
                           <span className="text-xs bg-red-950 text-red-400 border border-red-900 px-2 py-0.5 font-bold font-mono">
-                            {(plan.rate * 100).toFixed(1)}% 費率
+                            {(plan.rate * 100).toFixed(1)}% {SYSTEM_CONFIG.checkout.processingFeeSuffix}
                           </span>
                         ) : (
                           <span className="text-xs bg-green-950 text-green-400 border border-green-950 px-2 py-0.5 font-bold font-mono">
-                            免手續費
+                            {SYSTEM_CONFIG.checkout.freeFeeLabel}
                           </span>
                         )}
                       </div>
@@ -669,14 +664,14 @@ export default function App() {
                   <span>NT$ {(PRODUCT_DATA.price * quantity).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-xs text-gray-400 mb-4 font-mono">
-                  <span>Plan Processing Fee (手續費)</span>
+                  <span>{SYSTEM_CONFIG.checkout.processingFeeLabel}</span>
                   <span className={fee > 0 ? "text-red-400" : "text-green-400"}>
                     {fee > 0 ? `+NT$ ${fee.toLocaleString()}` : "NT$ 0"}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-end mb-4">
-                  <span className="font-bold italic text-base md:text-lg text-white">TOTAL PAYABLE</span>
+                  <span className="font-bold italic text-base md:text-lg text-white">{SYSTEM_CONFIG.checkout.totalPayableLabel}</span>
                   <span className="text-3xl md:text-4xl font-black font-number text-red-500 tracking-wide font-mono">
                     NT$ {grandTotal.toLocaleString()}
                   </span>
@@ -685,7 +680,7 @@ export default function App() {
                 {getSelectedPlan().months > 1 && (
                   <div className="mb-4 text-right bg-neutral-950/85 p-2 border border-neutral-900">
                     <p className="text-gray-300 text-sm">
-                      每期只要 <span className="text-xl md:text-2xl font-black text-yellow-500 font-number font-mono">{`NT$ ${monthlyPayment.toLocaleString()} / 期`}</span>
+                      {SYSTEM_CONFIG.checkout.perInstallmentPrefix} <span className="text-xl md:text-2xl font-black text-yellow-500 font-number font-mono">{`NT$ ${monthlyPayment.toLocaleString()} / ${SYSTEM_CONFIG.checkout.perInstallmentSuffix}`}</span>
                     </p>
                   </div>
                 )}
@@ -696,7 +691,7 @@ export default function App() {
                   className="w-full bg-red-600 hover:bg-red-500 text-white font-black py-4 uppercase tracking-widest skew-box shadow-[0_0_15px_rgba(220,38,38,0.5)] transition-all cursor-pointer text-center block"
                 >
                   <span className="unskew-text text-base md:text-lg flex items-center justify-center gap-1.5">
-                    Confirm & Launch Order <CheckCircle2 className="w-5 h-5" />
+                    {SYSTEM_CONFIG.checkout.confirmButtonText} <CheckCircle2 className="w-5 h-5" />
                   </span>
                 </button>
               </div>

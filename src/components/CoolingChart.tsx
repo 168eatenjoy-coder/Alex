@@ -71,7 +71,6 @@ const generateChartData = (): DataPoint[] => {
 const telemetryData = generateChartData();
 
 export default function CoolingChart() {
-  const [activeTab, setActiveTab] = useState<"chart" | "uploaded">("chart");
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
   const [hoverPos, setHoverPos] = useState<{ x: number; y: number } | null>(null);
 
@@ -178,34 +177,9 @@ export default function CoolingChart() {
             2021.5.26 FSW 富士短賽道 // 外氣溫 25°C 晴天 // 機油: HKS SUPER OIL Premium 0W-20
           </p>
         </div>
-
-        {/* Dynamic Display Switch Tab */}
-        <div className="flex bg-neutral-900 border border-neutral-800 p-1 rounded gap-1 self-stretch sm:self-auto">
-          <button
-            onClick={() => setActiveTab("chart")}
-            className={`flex-1 sm:flex-none uppercase px-3 py-1.5 rounded text-xs font-bold transition-all ${
-              activeTab === "chart"
-                ? "bg-red-600 text-white shadow-md shadow-red-600/35"
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            互動式圖表 (Recharts-Style)
-          </button>
-          <button
-            onClick={() => setActiveTab("uploaded")}
-            className={`flex-1 sm:flex-none uppercase px-3 py-1.5 rounded text-xs font-bold transition-all ${
-              activeTab === "uploaded"
-                ? "bg-red-600 text-white shadow-md shadow-red-600/35"
-                : "text-neutral-400 hover:text-white"
-            }`}
-          >
-            原廠對比原圖 (Uploaded Graph)
-          </button>
-        </div>
       </div>
 
-      {activeTab === "chart" ? (
-        <div className="relative">
+      <div className="relative">
           {/* Legend Selector Indicator */}
           <div className="flex flex-wrap gap-4 mb-3 text-xs md:text-sm font-bold bg-neutral-900/50 p-2.5 border border-neutral-900/80 justify-center">
             <div className="flex items-center gap-2">
@@ -465,30 +439,6 @@ export default function CoolingChart() {
             </p>
           </div>
         </div>
-      ) : (
-        <div className="flex flex-col items-center py-6 text-center">
-          <div className="max-w-2xl border border-neutral-800 bg-neutral-900/40 p-1">
-            <img
-              src="/data.jpg"
-              onError={(e) => {
-                const img = e.currentTarget;
-                if (!img.dataset.tried) {
-                  img.dataset.tried = "true";
-                  img.src = "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80";
-                }
-              }}
-              className="w-full h-auto block"
-              alt="HKS official uploaded telemetry chart"
-            />
-          </div>
-          <div className="mt-4 max-w-xl text-left bg-neutral-950 p-4 border border-dashed border-red-500/40">
-            <p className="text-xs text-red-400 font-bold mb-1">💡 提示 (How to use custom uploaded graph):</p>
-            <p className="text-xs text-gray-400 leading-relaxed">
-              如果您想在上方即時看到您上傳的原廠對比例圖，請把剛才的圖片重命名為 <code className="text-white font-mono bg-neutral-900 px-1 py-0.5 border border-neutral-800 rounded">data.jpg</code>，並在專案編輯器的檔案樹中，**直接拖曳或上傳到 <code className="text-white font-bold bg-neutral-900 px-1 py-0.5 border border-neutral-800 rounded">/public/</code> 資料夾內**即可！現在我已經替您配好了動態互動與原圖並存的極致架構！
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
