@@ -40,7 +40,7 @@ export const IMAGES = {
   // 首頁大圖 (修正為真正的 Toyota GR Yaris 高清賽車跑道姿態)
   heroBg: "/hks_demo.jpg",
   // 商品展示主圖 (AIRTEC 變速箱油冷排雙引流科技導風罩實車無損空運熱交換核心狀態)
-  product: "https://www.airtecmotorsport.com/wp-content/uploads/2024/04/ATMSYGR12-3.jpg",
+  product: "/product.jpg",
   // 數據曲線圖
   dataCurve: "/data.jpg",
   // 專業安裝現場/技師照
@@ -48,7 +48,7 @@ export const IMAGES = {
 
   // 備用 Unsplash 高清抗粉體塗層大圖 / AIRTEC 實裝精密導流照
   fallbackHeroBg: "https://images.unsplash.com/photo-1621259182978-f09e5e2b07ae?auto=format&fit=crop&w=1920&q=80",
-  fallbackProduct: "https://www.airtecmotorsport.com/wp-content/uploads/2024/04/ATMSYGR12-3.jpg",
+  fallbackProduct: "/product.jpg",
   fallbackDataCurve: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
   fallbackInstallMechanic: "https://images.unsplash.com/photo-1517524206127-48bbd363f3d7?auto=format&fit=crop&w=800&q=80"
 };

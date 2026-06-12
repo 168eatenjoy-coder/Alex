@@ -7,6 +7,9 @@ import {
   Flame, 
   Flag, 
   ShoppingCart, 
+  CheckCheck,
+  Check,
+  Plane,
   CheckCircle2, 
   AlertTriangle, 
   ArrowRight,
@@ -375,6 +378,7 @@ export default function App() {
           <img 
             src={IMAGES.heroBg} 
             onError={(e) => handleImageError(e, "hero")}
+            referrerPolicy="no-referrer"
             className="w-full h-full object-cover opacity-60 grayscale mix-blend-screen scale-105" 
             alt="Toyota GR Yaris Gen2 Motorsport stance"
           />
@@ -714,6 +718,7 @@ export default function App() {
                 <img 
                   src={IMAGES.product} 
                   onError={(e) => handleImageError(e, "product")}
+                  referrerPolicy="no-referrer"
                   className="w-full h-auto filter contrast-125 hover:scale-[1.01] transition-transform duration-500 block" 
                   alt="AIRTEC Box Core 3D outline with black powder coating"
                 />
@@ -805,6 +810,7 @@ export default function App() {
                 <img 
                   src={IMAGES.installMechanic} 
                   onError={(e) => handleImageError(e, "install")}
+                  referrerPolicy="no-referrer"
                   className="w-full h-auto grayscale contrast-125 border-4 border-white shadow-2xl block" 
                   alt="Professional installation details"
                 />
@@ -1005,28 +1011,68 @@ export default function App() {
             {/* Included Items Details */}
             <div className="space-y-4 mb-8 text-left">
               <p className="text-xs text-neutral-500 font-mono uppercase tracking-wide">{SYSTEM_CONFIG.checkout.packageItemsHeader}</p>
-              <ul className="space-y-3">
-                {activeProduct.specs.map((spec, i) => (
-                  <li key={i} className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2">
-                    <span className="font-bold text-gray-300 flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-red-600 flex-shrink-0" /> {spec}
+              <ul className="space-y-3 font-sans">
+                {/* Row 1: Product Kit Row */}
+                {activeProduct.id === "hks-type-s-oil-cooler" ? (
+                  <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2.5">
+                    <span className="font-bold text-gray-200 flex items-center gap-2.5">
+                      <Check className="w-4 h-4 text-red-600 flex-shrink-0" /> 
+                      <span>HKS Gen2 Oil Cooler Kit (Type-S)</span>
                     </span>
-                    <span className="text-green-500 font-black italic font-mono text-xs">{SYSTEM_CONFIG.checkout.readyLabel}</span>
+                    <span className="text-green-500 font-extrabold italic font-mono text-xs tracking-wider">READY</span>
                   </li>
-                ))}
-                
-                <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2">
-                  <span className="font-bold text-gray-300 flex items-center gap-2">
-                    <Truck className="w-4 h-4 text-red-600 flex-shrink-0" /> {SYSTEM_CONFIG.checkout.airCargoText}
-                  </span>
-                  <span className="text-green-500 font-black italic font-mono text-xs">{SYSTEM_CONFIG.checkout.includedLabel}</span>
-                </li>
+                ) : activeProduct.id === "airtec-gearbox-oil-cooler" ? (
+                  <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2.5">
+                    <span className="font-bold text-gray-200 flex items-center gap-2.5">
+                      <Check className="w-4 h-4 text-red-600 flex-shrink-0" /> 
+                      <span>AIRTEC Gen2 Gearbox Oil Cooler Kit (自排專屬)</span>
+                    </span>
+                    <span className="text-green-500 font-extrabold italic font-mono text-xs tracking-wider">READY</span>
+                  </li>
+                ) : (
+                  <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2.5">
+                    <span className="font-bold text-gray-200 flex items-center gap-2.5">
+                      <Check className="w-4 h-4 text-red-600 flex-shrink-0" /> 
+                      <span>AIRTEC + HKS Twin-Cooling Combo Kit</span>
+                    </span>
+                    <span className="text-green-500 font-extrabold italic font-mono text-xs tracking-wider">READY</span>
+                  </li>
+                )}
 
-                <li className="flex items-center justify-between text-sm md:text-base bg-red-950/25 p-3 -mx-3 rounded-sm border border-red-900/30">
-                  <span className="font-bold text-white flex items-center gap-2">
-                    <Gift className="w-4 h-4 text-yellow-500 flex-shrink-0" /> {SYSTEM_CONFIG.checkout.freeInstallBanner}
+                {/* Row 2: Air Cargo Row */}
+                {activeProduct.id === "hks-type-s-oil-cooler" ? (
+                  <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2.5">
+                    <span className="font-bold text-gray-200 flex items-center gap-2.5">
+                      <Plane className="w-4 h-4 text-red-600 flex-shrink-0" /> 
+                      <span>日本航空空運直達 (Japan Air Cargo)</span>
+                    </span>
+                    <span className="text-green-500 font-extrabold italic font-mono text-xs tracking-wider">READY</span>
+                  </li>
+                ) : activeProduct.id === "airtec-gearbox-oil-cooler" ? (
+                  <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2.5">
+                    <span className="font-bold text-gray-200 flex items-center gap-2.5">
+                      <Plane className="w-4 h-4 text-red-600 flex-shrink-0" /> 
+                      <span>英國航空空運直達 (UK Air Cargo)</span>
+                    </span>
+                    <span className="text-green-500 font-extrabold italic font-mono text-xs tracking-wider">READY</span>
+                  </li>
+                ) : (
+                  <li className="flex items-center justify-between text-sm md:text-base border-b border-neutral-900 pb-2.5">
+                    <span className="font-bold text-gray-200 flex items-center gap-2.5">
+                      <Plane className="w-4 h-4 text-red-600 flex-shrink-0" /> 
+                      <span>英日航空空運直達 (UK & Japan Air Cargo)</span>
+                    </span>
+                    <span className="text-green-500 font-extrabold italic font-mono text-xs tracking-wider">READY</span>
+                  </li>
+                )}
+
+                {/* Row 3: God hand professional install row */}
+                <li className="flex items-center justify-between text-sm md:text-base bg-red-950/20 p-3 -mx-3 rounded border border-red-900/30">
+                  <span className="font-bold text-white flex items-center gap-2.5">
+                    <Wrench className="w-4 h-4 text-red-600 flex-shrink-0" /> 
+                    <span>巨匠阿咪無損手工安裝 (God Hand Install)</span>
                   </span>
-                  <span className="text-yellow-400 font-black italic font-mono text-xs">{SYSTEM_CONFIG.checkout.freeUpgradeLabel}</span>
+                  <span className="text-yellow-500 font-extrabold italic font-mono text-xs tracking-wider">FREE UPGRADE</span>
                 </li>
               </ul>
             </div>
@@ -1211,6 +1257,7 @@ export default function App() {
         <p className="text-neutral-500 tracking-widest text-xs uppercase font-mono px-4">
           {SYSTEM_CONFIG.footer.brandSlogan}
         </p>
+
         <p className="text-[10px] text-neutral-600 mt-6 font-mono max-w-xl mx-auto px-4 leading-relaxed">
           {SYSTEM_CONFIG.footer.copyright}
         </p>
