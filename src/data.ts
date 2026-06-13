@@ -15,6 +15,12 @@ export interface Product {
     targetVal: number; // For animated counter! E.g. 172 for 172%
     suffix: string; // E.g. "% 容量激增"
   }[];
+  payLinks?: {
+    "1": string;
+    "3": string;
+    "6": string;
+    "12": string;
+  };
 }
 
 export interface InstallmentPlan {
@@ -133,7 +139,13 @@ export const PRODUCTS: Product[] = [
         targetVal: 100,
         suffix: "% 智能溫控守護"
       }
-    ]
+    ],
+    payLinks: {
+      "1": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/gVT1kvxjaHJrQfQbd7GQ",
+      "3": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/GYqjfSPbRPJPoOO6iNve",
+      "6": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/NOaY6IEacPzGbdBpYCTH",
+      "12": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/J7eSxUoXtt27VHWmzEG7"
+    }
   },
   {
     id: "airtec-twin-combo",

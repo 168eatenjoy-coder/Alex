@@ -235,6 +235,13 @@ export default function App() {
 
   const handleCheckoutRedirect = () => {
     const plan = getSelectedPlan();
+    
+    // Check if the currently active product has specific payLinks defined for the selected installment option (plan.id)
+    if (activeProduct.payLinks && activeProduct.payLinks[plan.id as "1" | "3" | "6" | "12"]) {
+      window.location.href = activeProduct.payLinks[plan.id as "1" | "3" | "6" | "12"];
+      return;
+    }
+
     if (plan.payLink) {
       if (selectedProductId === "airtec-gearbox-oil-cooler") {
         window.location.href = plan.payLink;
