@@ -100,7 +100,13 @@ export const PRODUCTS: Product[] = [
         targetVal: 100,
         suffix: "% 熱效率提升"
       }
-    ]
+    ],
+    payLinks: {
+      "1": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/xgrEl3PFICtvTEWqfqJf",
+      "3": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/qJvPc4QXSLkkGuYah7mB",
+      "6": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/aXZMSqzRKM4IL5viL9cD",
+      "12": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/kRzUUOgUxmFdJBt8tDTE"
+    }
   },
   {
     id: "hks-type-s-oil-cooler",
@@ -184,7 +190,13 @@ export const PRODUCTS: Product[] = [
         targetVal: 100,
         suffix: "% 專業無損匠人施工"
       }
-    ]
+    ],
+    payLinks: {
+      "1": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/hWsLHYFDFHOA2ydjFRcgM",
+      "3": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/Y5PxWM3SDeKtR34PkEI4Q",
+      "6": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/Iu6wlQoac8MLoM4rj1ZXI",
+      "12": "https://api.payuni.com.tw/api/uop/receive_info/2/1/CCAT005638610001/fETNvn7C9rfTYYuLejt2S"
+    }
   }
 ];
 
