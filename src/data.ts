@@ -358,7 +358,7 @@ export const SYSTEM_CONFIG = {
     freeInstallBanner: "【職人操刀】KTSP阿咪特約無損精密完工服務 (匠人親自全車守護，100%原廠孔位無損直上)",
     freeUpgradeLabel: "FREE UPGRADE",
     quantitySelectHeader: "選擇購入數量 (QUANTITY)",
-    checkoutButtonText: "加入購物車 (Add to basket)",
+    checkoutButtonText: "立即搶購現貨並安全結帳 (Secure Checkout Now)",
     
     modalTitle: "AIRTEC Racing Upgrade Portal",
     planSelectHeader: "Select Billing Method (金流與多期分期付款選項)",

@@ -1210,7 +1210,7 @@ export default function App() {
 
             {/* Order Checkout Button */}
             <button 
-              onClick={() => setIsModalOpen(true)}
+              onClick={handleCheckoutRedirect}
               className={`w-full font-black text-2xl md:text-3xl py-5 uppercase italic tracking-wider skew-box transition-all duration-300 cursor-pointer text-center block border-0 ${
                 themeMode === "cyber" 
                   ? "bg-cyan-500 hover:bg-cyan-400 text-black shadow-[0_0_25px_rgba(6,182,212,0.6)] hover:shadow-[0_0_35px_rgba(6,182,212,0.8)]" 
